@@ -21,7 +21,7 @@ public class MoviesService{
 
     public MoviesService(){
 //        this.baseUrl = "http://10.0.2.2:8080";
-         this.baseUrl = "http://192.168.1.200:8080";
+         this.baseUrl = "http://192.168.4.180:8080";
         this.repositoryName = "movies";
         this.fullUrl = this.baseUrl+"/"+this.repositoryName;
     }
@@ -98,6 +98,22 @@ public class MoviesService{
         System.out.println(movie);
 
         return movie;
+
+    }
+
+    public void deleteMovie(String id) {
+
+        System.out.println("Sugando");
+
+        String url = this.baseUrl+"/"+this.repositoryName+"/"+id;
+
+        try {
+            HttpService http = new HttpService();
+            String response = http.delete(url);
+            System.out.println(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

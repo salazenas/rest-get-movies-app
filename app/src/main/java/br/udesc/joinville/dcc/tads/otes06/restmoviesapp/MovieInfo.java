@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class MovieInfo extends AppCompatActivity {
+
+    String movieId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,4 +55,38 @@ public class MovieInfo extends AppCompatActivity {
             currency.setText("Pais: " + movie.getCurrency());
         }
     }
+
+    class DeleteMovie extends AsyncTask<Void, Void, Void> {
+
+        String movieId = "";
+
+        DeleteMovie(String id) {
+            super();
+            this.movieId = id;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            MoviesService mvs = new MoviesService();
+            mvs.deleteMovie(this.movieId);
+            return null;
+        }
+
+        protected void onPostExecute() {
+//            Intent movieList = new Intent(MovieInfo.class, MovieList.class);
+//            startActivity(movieList);
+            System.out.println("concluido");
+        }
+    }
+
+    protected void delete(View view) {
+
+        Intent previousMovie = getIntent();
+        String previousId = previousMovie.getExtras().getString(("movieId"));
+
+        DeleteMovie deleteMovie = new DeleteMovie(previousId);
+        deleteMovie.execute();
+
+    }
+
 }
